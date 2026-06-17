@@ -1,0 +1,31 @@
+name: Deploy to Hugging Face Spaces
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Deploy to Hugging Face
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          git clone https://huggingface.co/spaces/AremuTaiwo/Rag-Pipeline hf_space
+          cd hf_space
+
+          rm -rf *
+
+          cp -r ../* .
+
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+
+          git add .
+          git commit -m "auto deploy from GitHub"
+          git push https://AremuTaiwo:$HF_TOKEN@huggingface.co/spaces/AremuTaiwo/Rag-Pipeline main
