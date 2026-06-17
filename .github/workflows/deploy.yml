@@ -12,25 +12,18 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Install HF CLI
-        run: pip install huggingface_hub
-
-      - name: Upload to Hugging Face
+      - name: Deploy to Hugging Face
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
-          huggingface-cli login --token $HF_TOKEN
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
 
-          huggingface-cli repo create AremuTaiwo/Rag-Pipeline --type space || true
-
-          git clone https://huggingface.co/spaces/AremuTaiwo/Rag-Pipeline hf_space
+          git clone https://AremuTaiwo:$HF_TOKEN@huggingface.co/spaces/AremuTaiwo/Rag-Pipeline hf_space
 
           rsync -av --delete ./ hf_space/
 
           cd hf_space
-
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
 
           git add .
           git commit -m "deploy update" || echo "no changes"
