@@ -10,13 +10,13 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Deploy to Hugging Face
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
-          git clone https://huggingface.co/spaces/AremuTaiwo/Rag-Pipeline hf_space
+          git clone https://AremuTaiwo:$HF_TOKEN@huggingface.co/spaces/AremuTaiwo/Rag-Pipeline hf_space
           cd hf_space
 
           rm -rf *
@@ -27,5 +27,5 @@ jobs:
           git config user.email "actions@github.com"
 
           git add .
-          git commit -m "auto deploy from GitHub"
-          git push https://AremuTaiwo:$HF_TOKEN@huggingface.co/spaces/AremuTaiwo/Rag-Pipeline main
+          git commit -m "auto deploy" || echo "No changes to commit"
+          git push origin main
