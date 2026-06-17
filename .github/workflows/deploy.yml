@@ -1,34 +1,22 @@
-name: Sync to Hugging Face Hub
+name: Deploy to Hugging Face Spaces
 
 on:
   push:
     branches: [ main ]
-  workflow_dispatch:
 
 jobs:
-  sync-to-hub:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Push to Hugging Face
-        env:
-          HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
-          git clone https://AremuTaiwo:$HF_TOKEN@huggingface.co/spaces/AremuTaiwo/Rag-Pipeline hf_space
-          cd hf_space
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
 
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
+          git remote add hf https://AremuTaiwo:${{ secrets.HF_TOKEN }}@huggingface.co/spaces/AremuTaiwo/Rag-Pipeline
 
-          git pull origin main --rebase
-
-          cp -r ../* .
-
-          git add .
-          git commit -m "auto deploy" || echo "no changes"
-          git push origin main
+          git push hf main --force
