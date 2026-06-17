@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+pydantic
+groq
+python-dotenv
+sentence-transformers
+chromadb
+pdfplumber
+python-docx
+langchain-text-splitters
+gradio
