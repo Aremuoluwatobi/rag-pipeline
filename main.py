@@ -15,6 +15,11 @@ class QueryRequest(BaseModel):
     question: str
 
 
+@app.get("/")
+def home():
+    return {"message": "RAG Pipeline is running"}
+
+
 @app.get("/health")
 def health():
     return {"Status: healthy"}
