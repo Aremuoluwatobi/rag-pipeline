@@ -4,6 +4,10 @@ from metadata import get_available_pdfs
 from ingestion import ingest_pipeline
 from retrieval import retrieve_data
 
+print("=" * 50)
+print("Gradio version:", gr.__version__)
+print("=" * 50)
+
 try:
     retrieve_data("test")
 except Exception:
