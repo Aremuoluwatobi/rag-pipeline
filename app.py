@@ -1,6 +1,13 @@
 import gradio as gr
 from AI_response import ai_response
 from metadata import get_available_pdfs
+from ingestion import ingest_pipeline
+from retrieval import retrieve_data
+
+try:
+    retrieve_data("test")
+except Exception:
+    ingest_pipeline()
 
 
 def chat_fn(message, history):
@@ -35,4 +42,6 @@ with gr.Blocks() as demo:
 
     btn.click(respond, [msg, chatbot], [msg, chatbot])
 
-demo.launch()
+    msg.submit(respond, [msg, chatbot], [msg, chatbot])
+
+demo.launch(server_name="0.0.0.0", server_port=7860)
