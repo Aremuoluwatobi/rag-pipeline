@@ -2,6 +2,7 @@ import gradio as gr
 import sys
 import platform
 import pkg_resources
+import inspect
 from AI_response import ai_response
 from metadata import get_available_pdfs
 from ingestion import ingest_pipeline
@@ -15,6 +16,10 @@ print("IMPORTED GRADIO VERSION:", gr.__version__)
 print("INSTALLED GRADIO VERSION:",
       pkg_resources.get_distribution("gradio").version)
 print("GRADIO LOCATION:", gr.__file__)
+print("CHATBOT CLASS:", gr.Chatbot)
+print("CHATBOT MODULE:", gr.Chatbot.__module__)
+print("CHATBOT SIGNATURE:")
+print(inspect.signature(gr.Chatbot.__init__))
 print("=" * 60)
 
 try:
