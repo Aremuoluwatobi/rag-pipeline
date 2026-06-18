@@ -26,11 +26,28 @@ with gr.Blocks() as demo:
 
     gr.Markdown("---")
 
-    chatbot = gr.Chatbot()
+    chatbot = gr.Chatbot(
+        type="messages",
+        height=500
+    )
 
     def respond(message, history):
         answer = chat_fn(message, history)
-        history.append((message, answer))
+
+        history.append(
+            {
+                "role": "user",
+                "content": message
+            }
+        )
+
+        history.append(
+            {
+                "role": "assistant",
+                "content": answer
+            }
+        )
+
         return "", history
 
     with gr.Row():
