@@ -1,10 +1,10 @@
+gradio==6.18.0
 fastapi
 uvicorn
 groq
 python-dotenv
 sentence-transformers
 chromadb
-pdfplumber
+pdfplumber==0.11.10
 python-docx
 langchain-text-splitters
-gradio
