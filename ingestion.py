@@ -1,6 +1,6 @@
 import os
 from pdf_reader import extract_all_text
-from chunk import do_chunking
+from textchunk import do_chunking
 from embed import get_embeded
 from vectordb import add_database
 
