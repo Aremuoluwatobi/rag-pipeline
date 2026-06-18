@@ -1,12 +1,21 @@
 import gradio as gr
+import sys
+import platform
+import pkg_resources
 from AI_response import ai_response
 from metadata import get_available_pdfs
 from ingestion import ingest_pipeline
 from retrieval import retrieve_data
 
-print("=" * 50)
-print("Gradio version:", gr.__version__)
-print("=" * 50)
+
+print("=" * 60)
+print("PYTHON VERSION:", sys.version)
+print("PLATFORM:", platform.platform())
+print("IMPORTED GRADIO VERSION:", gr.__version__)
+print("INSTALLED GRADIO VERSION:",
+      pkg_resources.get_distribution("gradio").version)
+print("GRADIO LOCATION:", gr.__file__)
+print("=" * 60)
 
 try:
     retrieve_data("test")
