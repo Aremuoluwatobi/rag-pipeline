@@ -1,8 +1,24 @@
 import gradio as gr
+import sys
+import platform
+import huggingface_hub
+import sentence_transformers
+from huggingface_hub import logging
 from AI_response import ai_response
 from metadata import get_available_pdfs
 from ingestion import ingest_pipeline
 from retrieval import retrieve_data
+
+print("\n" + "="*60)
+print("PYTHON:", sys.version)
+print("PLATFORM:", platform.platform())
+print("GRADIO VERSION:", gr.__version__)
+print("GRADIO PATH:", gr.__file__)
+
+print("HF HUB VERSION:", huggingface_hub.__version__)
+print("SENTENCE TRANSFORMERS VERSION:", sentence_transformers.__version__)
+logging.set_verbosity_debug()
+print("="*60 + "\n")
 
 
 try:
