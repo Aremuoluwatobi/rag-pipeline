@@ -1,6 +1,13 @@
+from functools import lru_cache
 from sentence_transformers import SentenceTransformer
 
-model = SentenceTransformer("all-MiniLM-L6-v2")
+
+@lru_cache(maxsize=1)
+def get_model():
+    return SentenceTransformer("all-MiniLM-L6-v2")
+
+
+model = get_model()
 
 
 def get_embeded(chunks):

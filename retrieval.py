@@ -1,5 +1,5 @@
-from embed import model
 from vectordb import collection
+from embed import model
 
 
 def retrieve_data(question, top_k=4, source_filter=None):

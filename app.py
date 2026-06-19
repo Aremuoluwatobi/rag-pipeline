@@ -12,8 +12,6 @@ from huggingface_hub import login
 load_dotenv()
 
 token = os.getenv("HF_TOKEN")
-if token:
-    login(token, add_to_git_credential=False)
 
 
 try:
