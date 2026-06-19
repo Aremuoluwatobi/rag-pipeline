@@ -30,8 +30,16 @@ with gr.Blocks() as demo:
     chatbot = gr.Chatbot(height=300)
 
     def respond(message, history):
+        print("INPUT:", message)
+        print("HISTORY:", history)
+
         answer = chat_fn(message, history)
+
+        print("ANSWER:", answer)
+
         history.append((message, answer))
+        print("FINAL HISTORY:", history)
+
         return "", history
 
     with gr.Row():
