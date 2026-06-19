@@ -27,7 +27,7 @@ with gr.Blocks() as demo:
 
     gr.Markdown("---")
 
-    chatbot = gr.Chatbot(height=500)
+    chatbot = gr.Chatbot(height=300)
 
     def respond(message, history):
         answer = chat_fn(message, history)
