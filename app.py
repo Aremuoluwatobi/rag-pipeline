@@ -67,5 +67,7 @@ demo.launch(
     .message.bot > div { background-color: #334155 !important; color: white !important; }
     .svelte-button, button.primary { background-color: #38bdf8 !important; color: #0f172a !important; }
     textarea, input { background-color: #1e293b !important; color: white !important; border-color: #334155 !important; }
+    h2 { color: white !important; }
+    .accordion label { font-weight: 700 !important; font-size: 15px !important; }
     """
 )
