@@ -3,6 +3,5 @@ __pycache__/
 chroma_db/
 hf_cache/
 env/
-documents/
 model/
 *.pyc
