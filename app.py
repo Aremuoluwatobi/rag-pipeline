@@ -4,7 +4,6 @@ from metadata import get_available_pdfs
 from vectordb import clear_database
 from ingestion import download_documents, ingest_pipeline
 
-
 import os
 from dotenv import load_dotenv
 from huggingface_hub import login
@@ -25,8 +24,18 @@ def chat_fn(message, history):
 
 pdf_list = get_available_pdfs()
 
-
-with gr.Blocks() as demo:
+with gr.Blocks(
+    theme=gr.themes.Soft(),
+    title="MyScholar AI",
+    css="""
+    .gradio-container {
+        background-color: #1a1a2e !important;
+    }
+    .block {
+        background-color: #16213e !important;
+    }
+    """
+) as demo:
 
     gr.Markdown("## 📘 MyScholar AI")
 
@@ -39,21 +48,19 @@ with gr.Blocks() as demo:
 
     def respond(message, history):
         answer = chat_fn(message, history)
-
         history.append({"role": "user", "content": message})
         history.append({"role": "assistant", "content": answer})
-
         return "", history
 
     with gr.Row():
         msg = gr.Textbox(
             show_label=False,
-            placeholder="Ask your question..."
+            placeholder="Ask your question...",
+            scale=4
         )
-        btn = gr.Button("Send")
+        btn = gr.Button("Send", scale=1, variant="primary")
 
     btn.click(respond, [msg, chatbot], [msg, chatbot])
-
     msg.submit(respond, [msg, chatbot], [msg, chatbot])
 
 demo.launch(server_name="0.0.0.0", server_port=7860)
