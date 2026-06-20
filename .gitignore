@@ -4,4 +4,5 @@ chroma_db/
 hf_cache/
 env/
 model/
+documents/
 *.pyc
