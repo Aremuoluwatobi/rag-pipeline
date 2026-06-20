@@ -1,8 +1,9 @@
-from vectordb import collection
+from vectordb import client
 
 
 def get_available_pdfs():
     try:
+        collection = client.get_or_create_collection(name="rag_table")
         results = collection.get()
 
         pdfs = set()
@@ -12,4 +13,4 @@ def get_available_pdfs():
         return list(pdfs)
     except Exception as e:
         print(f"Pdf error: {e}")
-        return None
+        return []

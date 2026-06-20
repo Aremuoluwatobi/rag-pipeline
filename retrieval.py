@@ -1,10 +1,11 @@
-from vectordb import collection
+from vectordb import client
 from embed import model
 
 
 def retrieve_data(question, top_k=4, source_filter=None):
 
     try:
+        collection = client.get_or_create_collection(name="rag_table")
         query_embedding = model.encode([question])[0]
 
         query_params = {
