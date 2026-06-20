@@ -25,15 +25,19 @@ def chat_fn(message, history):
 pdf_list = get_available_pdfs()
 
 with gr.Blocks(
-    theme=gr.themes.Soft(),
+    theme=gr.themes.Base(
+        primary_hue="blue",
+        neutral_hue="slate",
+    ),
     title="MyScholar AI",
     css="""
-    .gradio-container {
-        background-color: #1a1a2e !important;
-    }
-    .block {
-        background-color: #16213e !important;
-    }
+    body, .gradio-container { background-color: #0f172a !important; }
+    .contain { background-color: #0f172a !important; }
+    .panel, .form { background-color: #1e293b !important; }
+    .message.user > div { background-color: #2563eb !important; color: white !important; }
+    .message.bot > div { background-color: #334155 !important; color: white !important; }
+    .svelte-button, button.primary { background-color: #38bdf8 !important; color: #0f172a !important; }
+    textarea, input { background-color: #1e293b !important; color: white !important; border-color: #334155 !important; }
     """
 ) as demo:
 
@@ -44,7 +48,7 @@ with gr.Blocks(
 
     gr.Markdown("---")
 
-    chatbot = gr.Chatbot(height=300)
+    chatbot = gr.Chatbot(height=450, show_label=False)
 
     def respond(message, history):
         answer = chat_fn(message, history)
