@@ -26,3 +26,13 @@ def add_database(chunks, embeddings, source_name="unknown.pdf"):
     except Exception as e:
         print(f"Vectordb Error: {e}")
         return False
+
+
+def clear_database():
+    global collection
+    try:
+        client.delete_collection("rag_table")
+        collection = client.get_or_create_collection(name="rag_table")
+        print("Database cleared")
+    except Exception as e:
+        print(f"Clear error: {e}")

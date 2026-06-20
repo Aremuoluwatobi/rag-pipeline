@@ -1,8 +1,8 @@
 import gradio as gr
 from AI_response import ai_response
 from metadata import get_available_pdfs
+from vectordb import clear_database
 from ingestion import download_documents, ingest_pipeline
-from retrieval import retrieve_data
 
 
 import os
@@ -15,13 +15,8 @@ token = os.getenv("HF_TOKEN")
 login(token=token)
 
 download_documents()
-
-
-try:
-    retrieve_data("test")
-except Exception as e:
-    print("Ingestion triggered because:", e)
-    ingest_pipeline()
+clear_database()
+ingest_pipeline()
 
 
 def chat_fn(message, history):
