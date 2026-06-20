@@ -1,4 +1,4 @@
-from model import client
+from model import groq_with_retry
 from retrieval import retrieve_data
 from fastapi import HTTPException
 
@@ -35,11 +35,8 @@ Question:
 """
 
     try:
-        response = client.chat.completions.create(
-            model="llama-3.1-8b-instant",
-            messages=[
-                {"role": "user", "content": prompt}
-            ]
+        response = groq_with_retry(
+            messages=[{"role": "user", "content": prompt}]
         )
 
         return response.choices[0].message.content
