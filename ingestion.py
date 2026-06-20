@@ -1,4 +1,5 @@
 import os
+from huggingface_hub import snapshot_download
 from pdf_reader import extract_all_text
 from textchunk import do_chunking
 from embed import get_embeded
@@ -6,6 +7,14 @@ from vectordb import add_database
 
 
 DOCUMENTS_FOLDER = "documents"
+
+
+def download_documents():
+    snapshot_download(
+        repo_id="AremuTaiwo/rag-documents",
+        repo_type="dataset",
+        local_dir="documents"
+    )
 
 
 def ingest_pipeline():

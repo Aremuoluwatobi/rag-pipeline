@@ -1,7 +1,7 @@
 import gradio as gr
 from AI_response import ai_response
 from metadata import get_available_pdfs
-from ingestion import ingest_pipeline
+from ingestion import download_documents, ingest_pipeline
 from retrieval import retrieve_data
 
 
@@ -13,6 +13,8 @@ load_dotenv()
 
 token = os.getenv("HF_TOKEN")
 login(token=token)
+
+download_documents()
 
 
 try:
