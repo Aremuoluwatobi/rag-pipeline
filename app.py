@@ -4,6 +4,7 @@ from metadata import get_available_pdfs
 from vectordb import clear_database
 from ingestion import download_documents, ingest_pipeline
 
+
 import os
 from dotenv import load_dotenv
 from huggingface_hub import login
@@ -24,7 +25,8 @@ def chat_fn(message, history):
 
 pdf_list = get_available_pdfs()
 
-with gr.Blocks(title="MyScholar AI") as demo:
+
+with gr.Blocks() as demo:
 
     gr.Markdown("## 📘 MyScholar AI")
 
@@ -33,41 +35,25 @@ with gr.Blocks(title="MyScholar AI") as demo:
 
     gr.Markdown("---")
 
-    chatbot = gr.Chatbot(height=450, show_label=False)
+    chatbot = gr.Chatbot(height=300)
 
     def respond(message, history):
         answer = chat_fn(message, history)
+
         history.append({"role": "user", "content": message})
         history.append({"role": "assistant", "content": answer})
+
         return "", history
 
     with gr.Row():
         msg = gr.Textbox(
             show_label=False,
-            placeholder="Ask your question...",
-            scale=4
+            placeholder="Ask your question..."
         )
-        btn = gr.Button("Send", scale=1, variant="primary")
+        btn = gr.Button("Send")
 
     btn.click(respond, [msg, chatbot], [msg, chatbot])
+
     msg.submit(respond, [msg, chatbot], [msg, chatbot])
 
-demo.launch(
-    server_name="0.0.0.0",
-    server_port=7860,
-    theme=gr.themes.Base(
-        primary_hue="blue",
-        neutral_hue="slate",
-    ),
-    css="""
-    body, .gradio-container { background-color: #0f172a !important; }
-    .contain { background-color: #0f172a !important; }
-    .panel, .form { background-color: #1e293b !important; }
-    .message.user > div { background-color: #2563eb !important; color: white !important; }
-    .message.bot > div { background-color: #334155 !important; color: white !important; }
-    .svelte-button, button.primary { background-color: #38bdf8 !important; color: #0f172a !important; }
-    textarea, input { background-color: #1e293b !important; color: white !important; border-color: #334155 !important; }
-    h2 { color: white !important; }
-    .accordion label { font-weight: 700 !important; font-size: 15px !important; }
-    """
-)
+demo.launch(server_name="0.0.0.0", server_port=7860)
