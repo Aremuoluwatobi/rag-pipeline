@@ -12,6 +12,7 @@ from huggingface_hub import login
 load_dotenv()
 
 token = os.getenv("HF_TOKEN")
+login(token=token)
 
 
 try:
