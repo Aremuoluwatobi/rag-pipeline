@@ -8,3 +8,4 @@ chromadb
 pdfplumber==0.11.10
 python-docx
 langchain-text-splitters
+pytest-9.1.1
