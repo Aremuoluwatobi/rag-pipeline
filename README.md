@@ -34,6 +34,8 @@ MyScholar AI is designed for students and researchers who need to extract inform
 - Clean conversational interface built with Gradio
 - FastAPI API for programmatic access and local testing
 - Containerised deployment on Hugging Face Spaces via Docker
+- Structured logging across all modules for production observability
+- Unit tests written with pytest covering core pipeline functions
 
 ---
 
@@ -83,6 +85,8 @@ Answer Displayed in Chat Interface
 | Text Splitting     | LangChain Text Splitters                 |
 | Deployment         | Hugging Face Spaces (Docker)             |
 | Document Storage   | Hugging Face Datasets                    |
+| Testing            | pytest                                   |
+| Logging            | Python logging module                    |
 
 ---
 
@@ -91,18 +95,22 @@ Answer Displayed in Chat Interface
 ```
 project/
 │
+├── tests/            # Unit tests for core pipeline functions
+│   └── test_textchunk.py
 ├── app.py            # Gradio interface and application entry point
 ├── main.py           # FastAPI routes for local API testing
 ├── AI_response.py    # LLM response generation
 ├── embed.py          # Text embedding
 ├── ingestion.py      # Document ingestion pipeline
+├── log_config.py     # Centralised logging configuration
 ├── metadata.py       # Document metadata retrieval
 ├── model.py          # Groq client configuration and retry logic
 ├── pdf_reader.py     # PDF text extraction
 ├── retrieval.py      # Vector similarity search
 ├── vectordb.py       # ChromaDB operations
 ├── textchunk.py      # Text chunking
-├── requirements.txt  # Project dependencies
+├── requirements.txt  # Production dependencies
+├── requirements-dev.txt  # Development dependencies (pytest)
 └── Dockerfile        # Container configuration
 ```
 
@@ -152,7 +160,12 @@ env\Scripts\activate
 pip install -r requirements.txt
 ```
 
-4. Create a .env file in the root directory and add the following environment variables:
+4. Install development dependencies:
+```
+pip install -r requirements-dev.txt
+```
+
+5. Create a .env file in the root directory and add the following environment variables:
 ```
 GROQ_API_KEY=your_groq_api_key
 HF_TOKEN=your_hugging_face_token
@@ -160,12 +173,20 @@ HF_TOKEN=your_hugging_face_token
 
 Note: The GROQ_API_KEY is required for LLM response generation. The HF_TOKEN is required for authenticated access to Hugging Face services and document downloads.
 
-5. Start the API server:
+6. Start the API server:
 ```
 uvicorn main:app --reload
 ```
 
 The API will be available at http://127.0.0.1:8000.
+
+---
+
+## Running Tests
+
+```
+pytest tests/
+```
 
 ---
 

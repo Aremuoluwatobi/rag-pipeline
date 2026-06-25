@@ -31,7 +31,7 @@ def extract_pdf_text(file_path):
                 if page_text:
                     pdf_text = clean_text(pdf_text)
                     pdf_text += page_text + " "
-                    logger.info(f"Successfully extracted pdf from {file_path}")
+        logger.info(f"Successfully extracted pdf from {file_path}")
 
         return pdf_text
 

@@ -14,7 +14,7 @@ model = get_model()
 def get_embeded(chunks):
     try:
         embeddings = model.encode(chunks)
-        logger.info(f"Successfully embeded {len(chunks)} chunks")
+        logger.info(f"Successfully embedded {len(chunks)} chunks")
 
         return embeddings
     except Exception as e:
