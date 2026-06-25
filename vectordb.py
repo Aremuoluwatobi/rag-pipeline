@@ -1,5 +1,6 @@
 import chromadb
 import uuid
+from log_config import logger
 
 client = chromadb.PersistentClient(path="./chroma_db")
 collection = client.get_or_create_collection(name="rag_table")
@@ -20,11 +21,12 @@ def add_database(chunks, embeddings, source_name="unknown.pdf"):
             embeddings=embeddings,
             metadatas=metadatas
         )
-
-        return "Documents stored successfully"
+        logger.info(
+            f"successfully stored {len(chunks)} chunks from {source_name}")
+        return True
 
     except Exception as e:
-        print(f"Vectordb Error: {e}")
+        logger.error(f"Vectordb Error: {e}")
         return False
 
 
@@ -33,6 +35,8 @@ def clear_database():
     try:
         client.delete_collection("rag_table")
         collection = client.get_or_create_collection(name="rag_table")
-        print("Database cleared")
+        logger.info("Database cleared")
+        return True
     except Exception as e:
-        print(f"Clear error: {e}")
+        logger.error(f"Clear error: {e}")
+        return False

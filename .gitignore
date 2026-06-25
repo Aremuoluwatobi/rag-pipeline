@@ -6,3 +6,4 @@ env/
 model/
 documents/
 *.pyc
+tests/__pycache__/

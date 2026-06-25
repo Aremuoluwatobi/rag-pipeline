@@ -1,4 +1,5 @@
 import os
+from log_config import logger
 from huggingface_hub import snapshot_download
 from pdf_reader import extract_all_text
 from textchunk import do_chunking
@@ -31,17 +32,17 @@ def ingest_pipeline():
 
             text = extract_all_text(file_path)
             if text is None:
-                print(f"skipping {file}")
+                logger.warning(f"Skipping {file} — text extraction failed")
                 continue
 
             chunks = do_chunking(text)
             if chunks is None:
-                print(f"skipping {file}")
+                logger.warning(f"Skipping {file} — chunking failed")
                 continue
 
             embeddings = get_embeded(chunks)
             if embeddings is None:
-                print(f"skipping {file}")
+                logger.warning(f"Skipping {file} — embedding failed")
                 continue
 
             add_database(
@@ -50,7 +51,7 @@ def ingest_pipeline():
                 source_name=file
             )
 
-        print("All documents ingested")
+        logger.info("All documents ingested successfully")
 
     except Exception as e:
-        print(f"Ingestion Error: {e}")
+        logger.error(f"Ingestion Error: {e}")

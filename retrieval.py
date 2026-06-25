@@ -1,5 +1,6 @@
 from vectordb import client
 from embed import model
+from log_config import logger
 
 
 def retrieve_data(question, top_k=4, source_filter=None):
@@ -22,8 +23,14 @@ def retrieve_data(question, top_k=4, source_filter=None):
         metadatas = result["metadatas"][0]
 
         paired = list(zip(docs, metadatas))
+        if source_filter:
+            logger.info(
+                f"Successfully retrieved {len(paired)} results for: {question[:50]} filtered by {source_filter}")
+        else:
+            logger.info(
+                f"Successfully retrieved {len(paired)} results for: {question[:50]}")
 
         return paired
     except Exception as e:
-        print(f"Retrieval error: {e}")
+        logger.error(f"Retrieval error: {e}")
         return None

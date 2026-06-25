@@ -1,6 +1,7 @@
 from model import groq_with_retry
 from retrieval import retrieve_data
 from fastapi import HTTPException
+from log_config import logger
 
 
 def ai_response(question):
@@ -35,13 +36,15 @@ Question:
 """
 
     try:
+        logger.info("Successfully sent prompt")
         response = groq_with_retry(
             messages=[{"role": "user", "content": prompt}]
         )
+        logger.info("Successfully receive LLM response")
 
         return response.choices[0].message.content
     except Exception as e:
-        print(f"LLM Error: {e}")
+        logger.error(f"LLM Error: {e}")
 
         raise HTTPException(
             status_code=500,

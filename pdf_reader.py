@@ -2,6 +2,7 @@ import pdfplumber
 import re
 import os
 from docx import Document
+from log_config import logger
 
 
 def clean_text(text):
@@ -30,11 +31,12 @@ def extract_pdf_text(file_path):
                 if page_text:
                     pdf_text = clean_text(pdf_text)
                     pdf_text += page_text + " "
+                    logger.info(f"Successfully extracted pdf from {file_path}")
 
         return pdf_text
 
     except Exception as e:
-        print(f"PDFPlumber Error: {e}")
+        logger.error(f"PDFPlumber Error: {e}")
         return ""
 
 
@@ -53,10 +55,11 @@ def extract_docx_text(file_path):
                 doc_text += paragraph.text + " "
 
         doc_text = clean_text(doc_text)
+        logger.info(f"Successfully extracted docx from {file_path}")
         return doc_text
 
     except Exception as e:
-        print(f"DOCX Error: {e}")
+        logger.error(f"DOCX Error: {e}")
         return None
 
 
@@ -72,5 +75,5 @@ def extract_all_text(file_path):
             return extract_docx_text(file_path)
 
     except Exception as e:
-        print(f"Unsupported file type: {e}")
+        logger.error(f"Unsupported file type: {e}")
         return None

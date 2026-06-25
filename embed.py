@@ -1,5 +1,6 @@
 from functools import lru_cache
 from sentence_transformers import SentenceTransformer
+from log_config import logger
 
 
 @lru_cache(maxsize=1)
@@ -13,8 +14,9 @@ model = get_model()
 def get_embeded(chunks):
     try:
         embeddings = model.encode(chunks)
+        logger.info(f"Successfully embeded {len(chunks)} chunks")
 
         return embeddings
     except Exception as e:
-        print(f"Embedding Error: {e}")
+        logger.error(f"Embedding Error: {e}")
         return None

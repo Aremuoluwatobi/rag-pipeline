@@ -1,4 +1,5 @@
 from vectordb import client
+from log_config import logger
 
 
 def get_available_pdfs():
@@ -10,7 +11,8 @@ def get_available_pdfs():
         for meta in results["metadatas"]:
             pdfs.add(meta["source"])
 
+        logger.info(f"Found {len(pdfs)} Pdf's available")
         return list(pdfs)
     except Exception as e:
-        print(f"Pdf error: {e}")
+        logger.error(f"Pdf error: {e}")
         return []
